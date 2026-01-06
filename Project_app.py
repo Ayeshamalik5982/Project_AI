@@ -189,7 +189,7 @@ if df is not None:
     st.markdown("---")
 
     # --- TOP NAV ---
-    tab1, tab2, tab3, tab4 = st.tabs(["📊 Executive Dashboard", "🔎 Applicant Analysis", "🤖 Loan Predictor", "📈 Analytics"])
+    tab1, tab2, tab3 = st.tabs(["📊 Executive Dashboard", "🔎 Applicant Analysis", "🤖 Loan Predictor"])
 
     # --- SIDEBAR FILTERS ---
     with st.sidebar:
@@ -305,7 +305,7 @@ if df is not None:
         st.dataframe(df_filtered, use_container_width=True)
         st.markdown('</div>', unsafe_allow_html=True)
 
-    # --- TAB 3: LOAN PREDICTOR ---
+    # --- TAB 3: LOAN PREDICTOR (SIMPLIFIED FIX) ---
     with tab3:
         st.markdown("<br>", unsafe_allow_html=True)
         st.markdown("<div class='gradient-text'>SMART PREDICTOR</div>", unsafe_allow_html=True)
@@ -376,41 +376,3 @@ if df is not None:
                     """, unsafe_allow_html=True)
             else:
                 st.info("👈 Enter applicant details to run the AI assessment.")
-
-    # --- TAB 4: ANALYTICS (NEW) ---
-    with tab4:
-        st.markdown("<br>", unsafe_allow_html=True)
-        st.markdown("<div class='gradient-text'>DATA ANALYTICS</div>", unsafe_allow_html=True)
-        
-        # Heatmap
-        st.markdown('<div class="glass-card">', unsafe_allow_html=True)
-        st.markdown("### 🔥 Correlation Heatmap")
-        corr_matrix = df_filtered.corr()
-        fig_heatmap = px.imshow(corr_matrix, text_auto=True, color_continuous_scale='Viridis')
-        fig_heatmap.update_layout(paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', font=dict(color='white'))
-        st.plotly_chart(fig_heatmap, use_container_width=True)
-        st.markdown('</div>', unsafe_allow_html=True)
-
-        # Boxplot
-        st.markdown('<div class="glass-card">', unsafe_allow_html=True)
-        st.markdown("### 📦 Loan Amount by Education Level (Boxplot)")
-        fig_box = px.box(df_filtered, x='Education', y='LoanAmount', color='Education', color_discrete_sequence=['#00b8ff', '#00ff9d'])
-        fig_box.update_layout(paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', font=dict(color='white'))
-        st.plotly_chart(fig_box, use_container_width=True)
-        st.markdown('</div>', unsafe_allow_html=True)
-
-        # Histogram
-        st.markdown('<div class="glass-card">', unsafe_allow_html=True)
-        st.markdown("### 📊 Loan Amount Distribution (Histogram)")
-        fig_hist = px.histogram(df_filtered, x='LoanAmount', nbins=30, color_discrete_sequence=['#00b8ff'])
-        fig_hist.update_layout(paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', font=dict(color='white'))
-        st.plotly_chart(fig_hist, use_container_width=True)
-        st.markdown('</div>', unsafe_allow_html=True)
-
-        # Whisker Plot
-        st.markdown('<div class="glass-card">', unsafe_allow_html=True)
-        st.markdown("### 📈 Whisker Plot for Loan Amount by Credit History")
-        fig_whisker = px.violin(df_filtered, x='Credit_History', y='LoanAmount', box=True, color='Credit_History', color_discrete_sequence=['#d946ef', '#00ff9d'])
-        fig_whisker.update_layout(paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', font=dict(color='white'))
-        st.plotly_chart(fig_whisker, use_container_width=True)
-        st.markdown('</div>', unsafe_allow_html=True)
